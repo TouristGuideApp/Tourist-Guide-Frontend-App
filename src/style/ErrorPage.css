@@ -1,0 +1,16 @@
+#error-h1 {
+    font-family: Ubuntu;
+    font-size: 50px;
+    text-align: center;
+    color: red;
+}
+
+.Error-image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    background-image: url("/src/img/errorpage-img.jpg");
+    background-repeat: repeat;
+    height: 500px;
+}
