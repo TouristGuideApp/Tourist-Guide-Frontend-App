@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
 body {
-    background-color: gray;
+    background-color: #E7EBF0;
 }
 
 .search-container {
@@ -14,5 +16,23 @@ body {
     padding-top: 150px;
 }
 
-.city-container{
+.city-name {
+    font-family: Ubuntu,Arial;
+    text-align: center;
+    /*border: 4px solid red;*/
+    width: 53%;
 }
+
+.city-info {
+    font-family: Ubuntu,Arial;
+    text-align: center;
+    /*border: 4px solid red;*/
+    height: 200px;
+    width: 160%;
+    padding-right: 5px;
+}
+
+.city-info p {
+    font-family: Ubuntu,Arial;
+}
+
