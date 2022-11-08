@@ -34,7 +34,7 @@ function Home() {
                 </div>
             </div>
             <div className="city-container">
-                <CityInfoHeader cityProp={cityProp} cityData={cityData} />
+                <CityInfoHeader cityProp={cityProp} cityData={cityData}/>
             </div>
         </div>
     );
