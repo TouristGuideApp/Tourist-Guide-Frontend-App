@@ -1,7 +1,7 @@
 import {Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
-import NavigationBar from "./components/navBar";
+import NavigationBar from "./components/navigationBar";
 import "../src/style/Home.css"
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="*" element={<ErrorPage/>}/>
+                {/*<Route path="*" element={<ErrorPage/>}/>*/}
             </Routes>
         </div>
     );
