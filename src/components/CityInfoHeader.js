@@ -21,7 +21,7 @@ function CityInfoHeader({cityData, cityProp}) {
                         <img
                             style={{width: "500px", height: "350px"}}
                             src={cityObj.file_name}
-                            alt="broken"
+                            alt="brokenImg"
                         />
                         <ImageListItemBar
                             sx={{fontFamily: "Ubuntu"}}
