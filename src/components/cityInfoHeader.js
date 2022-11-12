@@ -23,11 +23,10 @@ function CityInfoHeader({cityData, cityProp}) {
                 {cityData.map((cityObj) => (
                     <ImageListItem key={cityObj.img}>
                         <img
-                            style={{width: "500px", height: "350px"}}
+                            style={{width: "100%", height: "350px"}}
                             src={cityObj.file_name}
                             alt="broken"
                         />
-                        <Link to={"/city/" + cityObj.id + "/singlePage"}>
                             <ImageListItemBar
                                 sx={{fontFamily: "Ubuntu"}}
                                 title={cityObj.title}
@@ -44,7 +43,6 @@ function CityInfoHeader({cityData, cityProp}) {
                                     </IconButton>
                                 }
                             />
-                        </Link>
                     </ImageListItem>
                 ))}
             </ImageList>
