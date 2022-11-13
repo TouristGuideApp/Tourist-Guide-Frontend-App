@@ -4,8 +4,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import {Autocomplete} from "@mui/material";
 import Button from '@mui/material/Button';
-import axios from "axios";
-
 
 const cities = [
     "Paris",
@@ -20,16 +18,7 @@ const cities = [
     "Dublin"
 ];
 
-
-const filterData = (query) => {
-    if (!query) {
-        return cities;
-    } else {
-        return cities.filter((d) => d.toLowerCase().includes(query));
-    }
-};
-
-const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit}) => (
+const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
     <form onSubmit={onFormSubmit}>
         <Autocomplete
             onInputChange={(e) => setSearchQuery(e)}
@@ -44,6 +33,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit}) => (
                     onInput={(e) => {
                         setSearchQuery(e.target.value)
                     }}
+                    onKeyDown={onKeyDown}
                     value={searchQuery}
                     label="Enter A City Name"
                     variant="filled"
@@ -57,10 +47,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit}) => (
 );
 
 export default function SearchBarComp(props) {
-    const [value, setValue] = useState(null)
-    const [imagesSerialized, setImagesSerialized] = useState([])
     const [searchQuery, setSearchQuery] = useState("");
-    const dataFiltered = filterData(searchQuery);
 
     const handleChangeWord = (e) => {
         setSearchQuery(e.target.value)
@@ -70,7 +57,14 @@ export default function SearchBarComp(props) {
     const handleSubmitForm = (e) => {
         e.preventDefault()
         props.changeWord(searchQuery)
-        props.submitForm(e)
+        props.submitForm.call(this, searchQuery)
+    }
+
+    const handleKeyDownSearchBar = (e) => {
+        if (e.keyCode === 31){
+            props.changeWord(searchQuery)
+            props.submitForm.call(this, searchQuery)
+        }
     }
 
     return (
@@ -87,7 +81,7 @@ export default function SearchBarComp(props) {
                     }}
                 >
                     <SearchBar searchQuery={searchQuery} setSearchQuery={handleChangeWord}
-                               onFormSubmit={handleSubmitForm}/>
+                               onFormSubmit={handleSubmitForm} onKeyDown={handleKeyDownSearchBar}/>
                     <Button type="submit" variant="contained" onClick={handleSubmitForm}
                             style={{
                                 borderRadius: "8px",
