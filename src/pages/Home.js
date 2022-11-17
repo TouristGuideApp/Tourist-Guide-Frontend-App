@@ -4,12 +4,14 @@ import CityInfoHeader from "../components/cityInfoHeader";
 import {useState} from "react";
 import axios from "axios";
 import {CircularProgress} from "@mui/material";
+import BadAPICallError from "../components/badAPICallError";
 
 function Home() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
+    const [badAPICall, setBadAPICall] = useState(false)
 
     function getAllImages(titleToSearch) {
         let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch;
@@ -20,6 +22,8 @@ function Home() {
             setDisplayImages(true)
         }).catch(function (error) {
             console.log(error)
+            setBadAPICall(true)
+            setDisplayLoading(false)
         })
     }
 
@@ -29,7 +33,6 @@ function Home() {
     }
 
     return (
-
         <div className="Home">
             <div className="search-container">
                 <div className="searchbar">
@@ -41,6 +44,11 @@ function Home() {
                     <div className="city-container">
                         <CityInfoHeader cityProp={cityProp} cityData={cityData}/>
                     </div>
+                </>
+            }
+            {badAPICall &&
+                <>
+                    <BadAPICallError/>
                 </>
             }
             {displayLoading &&
