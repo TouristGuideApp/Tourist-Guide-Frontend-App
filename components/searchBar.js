@@ -30,9 +30,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
                     {...params}
                     id="search-bar"
                     className="text"
-                    onInput={(e) => {
-                        setSearchQuery(e.target.value)
-                    }}
+                    onInput={setSearchQuery}
                     onKeyDown={onKeyDown}
                     value={searchQuery}
                     label="Enter A City Name"

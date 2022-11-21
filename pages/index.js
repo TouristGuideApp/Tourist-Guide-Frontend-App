@@ -1,13 +1,11 @@
-import "../style/Home.css"
-import SearchBarComp from "../components/searchBar";
-import CityInfoHeader from "../components/cityInfoHeader";
 import {useState} from "react";
 import axios from "axios";
+import SearchBarComp from "../components/searchBar";
+import dynamic from "next/dynamic";
+import CityInfoHeader from "../components/cityInfoHeader";
 import {CircularProgress} from "@mui/material";
-// import dynamic from "next/dynamic";
-import AllImagesMap from "../components/AllImagesMap";
 
-function Home() {
+export default function Home() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
     const [displayLoading, setDisplayLoading] = useState(false)
@@ -32,10 +30,10 @@ function Home() {
         getAllImages(word)
     }
 
-    // const AllImagesMap = dynamic(
-    //     ()=> import('../components/AllImagesMap'),
-    //     {ssr: false}
-    // )
+    const AllSchoolsMap = dynamic(
+        () => import('../components/AllSchoolsMap'), // replace '@components/map' with your component's location
+        { ssr: false } // This line is important. It's what prevents server-side render
+    )
 
     return (
 
@@ -48,7 +46,7 @@ function Home() {
             {displayMap &&
                 <>
                     <div className="map-container">
-                        <AllImagesMap
+                        <AllSchoolsMap
                             mapInfo={cityData}
                         />
                     </div>
@@ -74,5 +72,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;
