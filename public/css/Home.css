@@ -8,7 +8,7 @@ body {
     position: relative;
     top: -72px;
     height: 350px;
-    background: url("/src/img/navbar-img.jpg");
+    background: url("/img/navbar-img.jpg");
 }
 
 .searchbar {

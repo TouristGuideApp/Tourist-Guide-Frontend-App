@@ -10,7 +10,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 40%;
-    background-image: url("/src/img/errorpage-img.jpg");
+    background-image: url("/img/errorpage-img.jpg");
     background-repeat: repeat;
     height: 500px;
 }
