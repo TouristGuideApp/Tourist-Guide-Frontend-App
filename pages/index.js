@@ -30,8 +30,8 @@ export default function Home() {
         getAllImages(word)
     }
 
-    const AllSchoolsMap = dynamic(
-        () => import('../components/AllSchoolsMap'), // replace '@components/map' with your component's location
+    const AllImagesMap = dynamic(
+        () => import('../components/AllImagesMap'), // replace '@components/map' with your component's location
         { ssr: false } // This line is important. It's what prevents server-side render
     )
 
@@ -46,7 +46,7 @@ export default function Home() {
             {displayMap &&
                 <>
                     <div className="map-container">
-                        <AllSchoolsMap
+                        <AllImagesMap
                             mapInfo={cityData}
                         />
                     </div>

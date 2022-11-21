@@ -7,11 +7,7 @@ import '/public/css/Home.css'
 import '/public/css/index.css'
 import NavigationBar from "../components/navigationBar";
 
-
-
 function MyApp({Component, pageProps}) {
-
-
     return (
         <>
             <CookiesProvider>
@@ -21,6 +17,5 @@ function MyApp({Component, pageProps}) {
         </>
     );
 }
-
 
 export default appWithTranslation(MyApp);

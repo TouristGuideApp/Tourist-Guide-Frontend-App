@@ -16,7 +16,7 @@ function MyComponent({getCurrentZoom, getCurrentCenter}) {
     return null
 }
 
-const AllSchoolsMap = (mapInfo) => {
+const AllImagesMap = (mapInfo) => {
     const [currentZoom, setCurrentZoom] = useState((mapInfo.zoom) ? mapInfo.zoom : 4)
     const [centerArray, setCenterArray] = useState((mapInfo.center) ? mapInfo.center : [37.98,23.72])
 
@@ -59,7 +59,7 @@ const AllSchoolsMap = (mapInfo) => {
     )
 }
 
-export default AllSchoolsMap
+export default AllImagesMap
 
 
 function SingleMarker (markerInfo){
