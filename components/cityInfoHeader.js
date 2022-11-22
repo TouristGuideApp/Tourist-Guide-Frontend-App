@@ -40,7 +40,9 @@ function CityInfoHeader({cityData, cityProp}) {
                                             <Tooltip title={"Total Views: " + cityObj.views} placement="top" arrow>
                                                 <VisibilityIcon style={{marginRight: "10px"}}/>
                                             </Tooltip>
-                                            <InfoIcon/>
+                                            <Tooltip title={"Owner Name: " + cityObj.ownerName} placement="top" arrow>
+                                                <InfoIcon/>
+                                            </Tooltip>
                                         </IconButton>
                                     }
                                 />
