@@ -44,7 +44,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
     </form>
 );
 
-export default function SearchBarComp(props) {
+export default function SearchBarIndexComp(props) {
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleChangeWord = (e) => {
@@ -68,7 +68,7 @@ export default function SearchBarComp(props) {
     return (
         <Box>
 
-            <div>
+            <div className="search-container searchbar">
                 <div
                     style={{
                         alignItems: "center",

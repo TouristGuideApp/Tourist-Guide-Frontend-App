@@ -1,6 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
-import SearchBarComp from "../components/searchBar";
+import SearchBarIndexComp from "../components/searchBarIndex";
 import dynamic from "next/dynamic";
 import CityInfoHeader from "../components/cityInfoHeader";
 import {CircularProgress} from "@mui/material";
@@ -48,13 +48,8 @@ export default function Home() {
     }
 
     return (
-
-        <div className="Home">
-            <div className="search-container">
-                <div className="searchbar">
-                    <SearchBarComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
-                </div>
-            </div>
+        <>
+        <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
             {displayMap &&
                 <>
                     <div className="map-container">
@@ -81,6 +76,6 @@ export default function Home() {
                     </div>
                 </>
             }
-        </div>
+        </>
     );
 }
