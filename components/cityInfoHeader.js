@@ -7,15 +7,23 @@ import InfoIcon from '@mui/icons-material/Info';
 import {Stack, Tooltip} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {Pagination} from "@mui/lab";
+import {useState} from 'react';
 
-function CityInfoHeader({cityData, cityProp, maxPage,  handlePageChange}) {
+function CityInfoHeader({cityData, cityProp, maxPage, currentPage, changeCurrentPage}) {
+
+    const [page, setPage] = useState(currentPage);
+
+    const handlePageChange = (event, newPage) => {
+        setPage(newPage);
+        changeCurrentPage.call(this, newPage )
+    };
     return (
         <>
             <div className="city-name">
                 <h1>{cityProp.toUpperCase()}</h1>
                 <hr/>
             </div>
-            <Pagination count={maxPage} onChange={handlePageChange} />
+            <Pagination count={maxPage} onChange={handlePageChange} page={page} />
             <ImageList sx={{width: "100%", height: "100%"}}>
                 <ImageListItem key="Subheader" cols={4}>
                 </ImageListItem>

@@ -12,15 +12,13 @@ export default function Home() {
     const [displayImages, setDisplayImages] = useState(false)
     const [displayMap, setDisplayMap] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [perPage, setPerPage] = useState(20)
-
     const [maxPage, setMaxPage] = useState(0)
 
     function getAllImages(titleToSearch, page, limit) {
         let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
         axios.get(APICallString).then(function (response) {
             const data = response.data
-            setMaxPage(data['totalPages'])
+            setMaxPage(data['totalPages']-1)
             setCityData(data["content"])
             setDisplayLoading(false)
             setDisplayImages(true)
@@ -33,7 +31,7 @@ export default function Home() {
     function submitForm(word){
         setDisplayLoading(true)
         setCityProp(word)
-        getAllImages(word, 1, 20)
+        getAllImages(word, 1, 8)
     }
 
     const AllImagesMap = dynamic(
@@ -41,13 +39,12 @@ export default function Home() {
         { ssr: false } // This line is important. It's what prevents server-side render
     )
 
-    const handlePageChange = (e) => {
-        const newPage = e.target.value
+    function handlePageChange(newPage){
         setCurrentPage(newPage)
         setDisplayMap(false)
         setDisplayImages(false)
         setDisplayLoading(true)
-        getAllImages(cityProp, newPage, 20)
+        getAllImages(cityProp, newPage, 8)
     }
 
     return (
@@ -70,7 +67,7 @@ export default function Home() {
             {displayImages &&
                 <>
                     <div className="city-container">
-                        <CityInfoHeader cityProp={cityProp} cityData={cityData} maxPage={maxPage}  handlePageChange={handlePageChange}/>
+                        <CityInfoHeader cityProp={cityProp} cityData={cityData} maxPage={maxPage} currentPage={currentPage} changeCurrentPage={handlePageChange}/>
                     </div>
                 </>
             }
