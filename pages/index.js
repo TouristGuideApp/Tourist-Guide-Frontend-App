@@ -11,12 +11,17 @@ export default function Home() {
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
     const [displayMap, setDisplayMap] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [perPage, setPerPage] = useState(20)
 
-    function getAllImages(titleToSearch) {
-        let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch;
+    const [maxPage, setMaxPage] = useState(0)
+
+    function getAllImages(titleToSearch, page, limit) {
+        let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
         axios.get(APICallString).then(function (response) {
             const data = response.data
-            setCityData(data)
+            setMaxPage(data['totalPages'])
+            setCityData(data["content"])
             setDisplayLoading(false)
             setDisplayImages(true)
             setDisplayMap(true)
@@ -27,13 +32,23 @@ export default function Home() {
 
     function submitForm(word){
         setDisplayLoading(true)
-        getAllImages(word)
+        setCityProp(word)
+        getAllImages(word, 1, 20)
     }
 
     const AllImagesMap = dynamic(
         () => import('../components/AllImagesMap'), // replace '@components/map' with your component's location
         { ssr: false } // This line is important. It's what prevents server-side render
     )
+
+    const handlePageChange = (e) => {
+        const newPage = e.target.value
+        setCurrentPage(newPage)
+        setDisplayMap(false)
+        setDisplayImages(false)
+        setDisplayLoading(true)
+        getAllImages(cityProp, newPage, 20)
+    }
 
     return (
 
@@ -55,7 +70,7 @@ export default function Home() {
             {displayImages &&
                 <>
                     <div className="city-container">
-                        <CityInfoHeader cityProp={cityProp} cityData={cityData}/>
+                        <CityInfoHeader cityProp={cityProp} cityData={cityData} maxPage={maxPage}  handlePageChange={handlePageChange}/>
                     </div>
                 </>
             }
