@@ -1,17 +1,39 @@
 import {useRouter} from "next/router";
+import SearchBarIndexComp from "../../../components/searchBarIndex";
+import SearchBarSingleImage from "../../../components/searchBarSingleImage";
+import dynamic from "next/dynamic";
 
-function Specific({id}){
+function Specific({singleCity}) {
+    console.log(singleCity)
+
+    const AllImagesMap = dynamic(
+        () => import('../../../components/specificImagesMap'), // replace '@components/map' with your component's location
+        {ssr: false} // This line is important. It's what prevents server-side render
+    )
+
     return (
         <>
-            <div>{id}</div>
+            <SearchBarSingleImage/>
+                <div className="map-container">
+                    <AllImagesMap
+                        mapInfo={singleCity}
+                    />
+                </div>
         </>
     )
 }
 
-function specificImage(){
-    const router = useRouter()
-    const {id} = router.query
-    return <Specific id={id}/>
-}
 
-export default specificImage
+export default Specific
+
+export async function getServerSideProps({query}) {
+    const cityID = query.id
+    const data = await fetch('http://localhost:8080/api/v1/images/' + cityID);
+    let singleImage = await data.json();
+
+    return {
+        props: {
+            singleCity: singleImage
+        }
+    }
+}
