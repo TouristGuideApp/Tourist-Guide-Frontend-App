@@ -30,8 +30,6 @@ function NavigationBar() {
     const [displayLoginDialog, setDisplayLoginDialog] = useState(false)
     const [displaySignupDialog, setDisplaySignupDialog] = useState(false)
     const [userLoggedIn, setUserLoggedIn] = useState(false)
-    
-    
 
     useEffect(() => {
         if(typeof window !== "undefined"){
@@ -52,6 +50,11 @@ function NavigationBar() {
     function loginAftereffects(){
         handleCloseUserMenu()
         setDisplayLoginDialog(false)
+    }
+
+    function signUpAftereffects(){
+        handleCloseUserMenu()
+        setDisplaySignupDialog(false)
     }
 
     return (
@@ -165,6 +168,7 @@ function NavigationBar() {
             <>
                 <SignUpComponent
                     onClose={() => setDisplaySignupDialog(false)}
+                    onSignUpSuccess={signUpAftereffects}
                 />
             </>
         }
