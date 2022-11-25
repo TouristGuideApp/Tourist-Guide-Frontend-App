@@ -31,7 +31,7 @@ const AllImagesMap = (mapInfo) => {
     }
 
     return (
-        <MapContainer center={centerArray} zoom={currentZoom} scrollWheelZoom={true} style={{height: 400, width: "100%", zIndex:"1"}}>
+        <MapContainer center={centerArray} zoom={currentZoom} scrollWheelZoom={false} style={{height: 400, width: "100%", zIndex:"1"}}>
             <MyComponent
                 getCurrentZoom={returnZoomValue}
                 getCurrentCenter={returnCenter}

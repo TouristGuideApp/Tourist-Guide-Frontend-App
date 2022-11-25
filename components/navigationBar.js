@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+import LuggageIcon from '@mui/icons-material/Luggage';
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
@@ -39,7 +39,7 @@ function NavigationBar() {
 
             <Container maxWidth="string">
                 <Toolbar disableGutters>
-                    <AdbIcon
+                    <LuggageIcon
                         sx={{display: {xs: "none", md: "flex"}, mr: 1, color: "white", zIndex: 2}}
                     />
 
