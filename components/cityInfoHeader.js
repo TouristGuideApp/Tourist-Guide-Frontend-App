@@ -4,18 +4,28 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import {Tooltip} from "@mui/material";
+import {Stack, Tooltip} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import {Pagination} from "@mui/lab";
+import {useState} from 'react';
 import Link from "next/link";
 
-function CityInfoHeader({cityData, cityProp}) {
 
+function CityInfoHeader({cityData, cityProp, maxPage, currentPage, changeCurrentPage}) {
+
+    const [page, setPage] = useState(currentPage);
+
+    const handlePageChange = (event, newPage) => {
+        setPage(newPage);
+        changeCurrentPage.call(this, newPage )
+    };
     return (
         <>
             <div className="city-name">
                 <h1>{cityProp.toUpperCase()}</h1>
                 <hr/>
             </div>
+            <Pagination count={maxPage} onChange={handlePageChange} page={page} />
             <ImageList sx={{width: "100%", height: "100%"}}>
                 <ImageListItem key="Subheader" cols={4}>
                 </ImageListItem>
@@ -52,6 +62,7 @@ function CityInfoHeader({cityData, cityProp}) {
                     )
                 })}
             </ImageList>
+
         </>
     );
 }

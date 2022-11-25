@@ -13,14 +13,17 @@ export default function Home() {
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
     const [displayMap, setDisplayMap] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [maxPage, setMaxPage] = useState(0)
     const [firstLoad, setFirstLoad] = useState(true)
     const router = useRouter()
 
-    function getAllImages(titleToSearch) {
-        let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch;
+    function getAllImages(titleToSearch, page, limit) {
+        let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
         axios.get(APICallString).then(function (response) {
             const data = response.data
-            setCityData(data)
+            setMaxPage(data['totalPages']-1)
+            setCityData(data["content"])
             setDisplayLoading(false)
             setDisplayImages(true)
             setDisplayMap(true)
@@ -32,13 +35,23 @@ export default function Home() {
 
     function submitForm(word) {
         setDisplayLoading(true)
-        getAllImages(word)
+        setCityProp(word)
+        getAllImages(word, 1, 8)
     }
 
     const AllImagesMap = dynamic(
         () => import('../components/AllImagesMap'), // replace '@components/map' with your component's location
         {ssr: false} // This line is important. It's what prevents server-side render
     )
+
+
+    function handlePageChange(newPage){
+        setCurrentPage(newPage)
+        setDisplayMap(false)
+        setDisplayImages(false)
+        setDisplayLoading(true)
+        getAllImages(cityProp, newPage, 8)
+    }
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -56,6 +69,7 @@ export default function Home() {
         }
     })
 
+
     return (
         <>
             <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
@@ -71,7 +85,7 @@ export default function Home() {
             {displayImages &&
                 <>
                     <div className="city-container">
-                        <CityInfoHeader cityProp={cityProp} cityData={cityData}/>
+                        <CityInfoHeader cityProp={cityProp} cityData={cityData} maxPage={maxPage} currentPage={currentPage} changeCurrentPage={handlePageChange}/>
                     </div>
                 </>
             }
