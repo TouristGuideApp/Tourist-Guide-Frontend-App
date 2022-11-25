@@ -8,6 +8,8 @@ import {Stack, Tooltip} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {Pagination} from "@mui/lab";
 import {useState} from 'react';
+import Link from "next/link";
+
 
 function CityInfoHeader({cityData, cityProp, maxPage, currentPage, changeCurrentPage}) {
 
@@ -49,13 +51,15 @@ function CityInfoHeader({cityData, cityProp, maxPage, currentPage, changeCurrent
                                             <Tooltip title={"Total Views: " + cityObj.views} placement="top" arrow>
                                                 <VisibilityIcon style={{marginRight: "10px"}}/>
                                             </Tooltip>
-                                            <InfoIcon/>
+                                            <Link href={"/image/" + cityObj.id}>
+                                                <InfoIcon/>
+                                            </Link>
                                         </IconButton>
                                     }
                                 />
                             </ImageListItem>
                         </>
-                )
+                    )
                 })}
             </ImageList>
 

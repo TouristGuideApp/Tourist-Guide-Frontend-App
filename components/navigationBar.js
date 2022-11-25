@@ -12,31 +12,54 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import {useState} from "react";
+import LoginComponent from "/components/loginComponent";
+import SignUpComponent from "/components/signupComponent"
+import { useEffect } from "react";
 
 function NavigationBar() {
-    const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
-    const settings = ["Log In", "Sign Up"];
+    const [displayLoginDialog, setDisplayLoginDialog] = useState(false)
+    const [displaySignupDialog, setDisplaySignupDialog] = useState(false)
+    const [userLoggedIn, setUserLoggedIn] = useState(false)
+
+    useEffect(() => {
+        if(typeof window !== "undefined"){
+            if(localStorage.getItem("userLoggedIn")){
+                setUserLoggedIn(true)
+            } else {
+                setUserLoggedIn(false)
+            }
+        }
+    }) 
+
+    function handleLogout(){
+        localStorage.removeItem("userJWT")
+        localStorage.removeItem("userLoggedIn")
+        location.href = '/'
+    }
+
+    function loginAftereffects(){
+        handleCloseUserMenu()
+        setDisplayLoginDialog(false)
+    }
+
+    function signUpAftereffects(){
+        handleCloseUserMenu()
+        setDisplaySignupDialog(false)
+    }
 
     return (
+        <>        
         <AppBar position="static" style={{backgroundColor:"transparent", border: "none", boxShadow: "none"}}>
-
             <Container maxWidth="string">
                 <Toolbar disableGutters>
                     <AdbIcon
@@ -96,21 +119,61 @@ function NavigationBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
+                        {!userLoggedIn &&   
+                            <>
                                 <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
+                                    key={0}
+                                    onClick={() => setDisplayLoginDialog(true)}
                                 >
                                     <Typography textAlign="center">
-                                        {setting}
+                                        {"Log In"}
                                     </Typography>
-                                </MenuItem>
-                            ))}
+                            </MenuItem>
+                            <MenuItem
+                                    key={1}
+                                    onClick={() => setDisplaySignupDialog(true)}
+                                >
+                                    <Typography textAlign="center">
+                                        {"Sign Up"}
+                                    </Typography>
+                            </MenuItem>
+                            </>
+                        }
+                        {userLoggedIn &&
+                            <>
+                            <MenuItem
+                                key={0}
+                                onClick={handleLogout}
+                            >
+                                <Typography textAlign="center">
+                                    {"Log Out"}
+                                </Typography>
+                            </MenuItem>
+                            </>
+                        }
                         </Menu>
                     </Box>
                 </Toolbar>
             </Container>
         </AppBar>
+        {displayLoginDialog &&
+            <>
+                <LoginComponent
+                    onClose={() => setDisplayLoginDialog(false)}
+                    onLoginSuccess={loginAftereffects}
+                />
+            </>
+        }
+        {displaySignupDialog &&
+            <>
+                <SignUpComponent
+                    onClose={() => setDisplaySignupDialog(false)}
+                    onSignUpSuccess={signUpAftereffects}
+                />
+            </>
+        }
+        
+        </>
     );
 }
 
