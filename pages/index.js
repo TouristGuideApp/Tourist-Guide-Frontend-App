@@ -6,13 +6,17 @@ import CityInfoHeader from "../components/cityInfoHeader";
 import {CircularProgress} from "@mui/material";
 import {useRouter} from "next/router";
 import EmptyCityAPICall from "../components/emptyCityAPICall";
+import BadAPICallError from "../components/badAPICallError";
+
 
 export default function Home() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
     const [mapInfo, setMapInfo] = useState([])
 
+
     const [emptyCityAPICall, setEmptyCityAPICall] = useState(false)
+    const [badAPICall,setBadAPICall] = useState(false)
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
     const [displayMap, setDisplayMap] = useState(false)
@@ -44,6 +48,8 @@ export default function Home() {
                 }
             }).catch(function (error) {
             console.log(error)
+            setBadAPICall(true)
+            setDisplayLoading(false)
         })
     }
 
@@ -91,8 +97,10 @@ export default function Home() {
                 <>
                     <EmptyCityAPICall/>
                 </>
-
-
+            {badAPICall &&
+                <>
+                    <BadAPICallError/>
+                </>
             }
             {displayMap &&
                 <>
