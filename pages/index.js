@@ -5,12 +5,14 @@ import dynamic from "next/dynamic";
 import CityInfoHeader from "../components/cityInfoHeader";
 import {CircularProgress} from "@mui/material";
 import {useRouter} from "next/router";
+import EmptyCityAPICall from "../components/emptyCityAPICall";
 
 export default function Home() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
-    const [mapInfo,setMapInfo] = useState([])
+    const [mapInfo, setMapInfo] = useState([])
 
+    const [emptyCityAPICall, setEmptyCityAPICall] = useState(false)
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
     const [displayMap, setDisplayMap] = useState(false)
@@ -21,17 +23,26 @@ export default function Home() {
 
     function getAllImages(titleToSearch, page, limit) {
         let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
-        axios.get(APICallString).then(function (response) {
-            const data = response.data
-            setMaxPage(data['totalPages']-1)
-            setCityData(data["content"])
-            setCityData(data)
-            setMapInfo(data)
-            setDisplayLoading(false)
-            setDisplayImages(true)
-            setDisplayMap(true)
-            console.log(data)
-        }).catch(function (error) {
+        axios.get(APICallString)
+            .then(function (response) {
+                if (response.data.length !== 0) {
+                    console.log(response.status)
+                    const data = response.data
+                    setMaxPage(data['totalPages'] - 1)
+                    setCityData(data["content"])
+                    setCityData(data)
+                    setMapInfo(data)
+                    setDisplayLoading(false)
+                    setDisplayImages(true)
+                    setDisplayMap(true)
+                    console.log(data)
+                } else if (response.data.length === 0) {
+                    setEmptyCityAPICall(true)
+                    setDisplayMap(false)
+                    setDisplayLoading(false)
+                    setDisplayImages(false)
+                }
+            }).catch(function (error) {
             console.log(error)
         })
     }
@@ -48,7 +59,7 @@ export default function Home() {
     )
 
 
-    function handlePageChange(newPage){
+    function handlePageChange(newPage) {
         setCurrentPage(newPage)
         setDisplayMap(false)
         setDisplayImages(false)
@@ -76,6 +87,13 @@ export default function Home() {
     return (
         <>
             <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
+            {emptyCityAPICall &&
+                <>
+                    <EmptyCityAPICall/>
+                </>
+
+
+            }
             {displayMap &&
                 <>
                     <div className="map-container">
@@ -88,7 +106,8 @@ export default function Home() {
             {displayImages &&
                 <>
                     <div className="city-container">
-                        <CityInfoHeader cityProp={cityProp} mapInfo={mapInfo} maxPage={maxPage} currentPage={currentPage} changeCurrentPage={handlePageChange}/>
+                        <CityInfoHeader cityProp={cityProp} mapInfo={mapInfo} maxPage={maxPage}
+                                        currentPage={currentPage} changeCurrentPage={handlePageChange}/>
                     </div>
                 </>
             }
