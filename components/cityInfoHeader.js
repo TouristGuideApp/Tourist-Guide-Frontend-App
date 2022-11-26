@@ -11,7 +11,7 @@ import {useState} from 'react';
 import Link from "next/link";
 
 
-function CityInfoHeader({cityData, cityProp, maxPage, currentPage, changeCurrentPage}) {
+function CityInfoHeader({mapInfo, cityProp, maxPage, currentPage, changeCurrentPage}) {
 
     const [page, setPage] = useState(currentPage);
 
@@ -29,7 +29,7 @@ function CityInfoHeader({cityData, cityProp, maxPage, currentPage, changeCurrent
             <ImageList sx={{width: "100%", height: "100%"}}>
                 <ImageListItem key="Subheader" cols={4}>
                 </ImageListItem>
-                {cityData.map((cityObj) => {
+                {mapInfo.map((cityObj) => {
                     return (
                         <>
                             <ImageListItem key={cityObj.img}>
