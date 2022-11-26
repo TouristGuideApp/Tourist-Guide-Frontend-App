@@ -39,6 +39,8 @@ export default function Home() {
                     setDisplayLoading(false)
                     setDisplayImages(true)
                     setDisplayMap(true)
+                    setBadAPICall(false)
+                    setEmptyCityAPICall(false)
                     console.log(data)
                 } else if (response.data.length === 0) {
                     setEmptyCityAPICall(true)
@@ -97,6 +99,7 @@ export default function Home() {
                 <>
                     <EmptyCityAPICall/>
                 </>
+            }
             {badAPICall &&
                 <>
                     <BadAPICallError/>
