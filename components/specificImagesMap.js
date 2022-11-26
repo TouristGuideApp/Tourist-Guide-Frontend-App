@@ -32,7 +32,7 @@ const SpecificImagesMap = (mapInfo) => {
     }
 
     return (
-        <MapContainer center={[mapInfo.mapInfo.latitude, mapInfo.mapInfo.longitude]} zoom={currentZoom} scrollWheelZoom={true}
+        <MapContainer center={[mapInfo.mapInfo.latitude, mapInfo.mapInfo.longitude]} zoom={currentZoom} scrollWheelZoom={false}
                       style={{height: 400, width: "100%", zIndex: "1"}}>
             <MyComponent
                 getCurrentZoom={returnZoomValue}
