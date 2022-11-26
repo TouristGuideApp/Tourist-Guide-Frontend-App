@@ -78,10 +78,10 @@ export default function SignUpComponent({onClose, onSignUpSuccess}) {
   return (
     <div>
       <Dialog open={true} onClose={onClose}>
-        <DialogTitle>Log In</DialogTitle>
+        <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
           <DialogContentText style={{marginRight: "250px"}}>
-            Welcome back, dear user.
+            Welcome new user!
           </DialogContentText>
           <TextField
             value={firstNameField}
