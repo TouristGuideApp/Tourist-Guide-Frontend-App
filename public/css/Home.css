@@ -7,9 +7,10 @@ body {
 .search-container {
     position: relative;
     top: -72px;
-    height: 350px;
-    background: url("/src/img/navbar-img.jpg");
+    height: 250px;
+    background: url("/img/navbar-img.jpg");
 }
+
 
 .searchbar {
     padding-top: 150px;
@@ -42,4 +43,10 @@ body {
 .grid-container {
     background-color: #F3F5F6;
     border-style: none;
+}
+
+/*Single Page CSS*/
+
+.card-city-info {
+    font-family: Ubuntu;
 }

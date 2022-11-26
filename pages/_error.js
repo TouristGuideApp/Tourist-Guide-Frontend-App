@@ -1,6 +1,4 @@
-import "../style/ErrorPage.css"
-
-function ErrorPage() {
+function Custom400() {
     return (
         <div className="ErrorPage">
             <div className="Error-image">
@@ -11,4 +9,4 @@ function ErrorPage() {
     );
 }
 
-export default ErrorPage;
+export default Custom400;

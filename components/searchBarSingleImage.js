@@ -4,6 +4,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import {Autocomplete} from "@mui/material";
 import Button from '@mui/material/Button';
+import {useRouter} from "next/router";
 
 const cities = [
     "Paris",
@@ -30,9 +31,7 @@ const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
                     {...params}
                     id="search-bar"
                     className="text"
-                    onInput={(e) => {
-                        setSearchQuery(e.target.value)
-                    }}
+                    onInput={setSearchQuery}
                     onKeyDown={onKeyDown}
                     value={searchQuery}
                     label="Enter A City Name"
@@ -46,31 +45,30 @@ const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
     </form>
 );
 
-export default function SearchBarComp(props) {
+export default function SearchBarSingleImage(props) {
     const [searchQuery, setSearchQuery] = useState("");
+    const router = useRouter()
 
     const handleChangeWord = (e) => {
         setSearchQuery(e.target.value)
-
     }
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-        props.changeWord(searchQuery)
-        props.submitForm.call(this, searchQuery)
+        router.push("/?q=" + searchQuery).then()
     }
 
     const handleKeyDownSearchBar = (e) => {
         if (e.keyCode === 31){
-            props.changeWord(searchQuery)
-            props.submitForm.call(this, searchQuery)
+            e.preventDefault()
+            router.push("/?q=" + searchQuery).then()
         }
     }
 
     return (
         <Box>
 
-            <div>
+            <div className="search-container searchbar">
                 <div
                     style={{
                         alignItems: "center",
