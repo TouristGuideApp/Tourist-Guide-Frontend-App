@@ -5,12 +5,14 @@ import dynamic from "next/dynamic";
 import CityInfoHeader from "../components/cityInfoHeader";
 import {CircularProgress} from "@mui/material";
 import {useRouter} from "next/router";
+import BadAPICallError from "../components/badAPICallError";
 
 export default function Home() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
     const [mapInfo,setMapInfo] = useState([])
 
+    const [badAPICall,setBadAPICall] = useState(false)
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
     const [displayMap, setDisplayMap] = useState(false)
@@ -33,6 +35,8 @@ export default function Home() {
             console.log(data)
         }).catch(function (error) {
             console.log(error)
+            setBadAPICall(true)
+            setDisplayLoading(false)
         })
     }
 
@@ -76,6 +80,11 @@ export default function Home() {
     return (
         <>
             <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
+            {badAPICall &&
+                <>
+                    <BadAPICallError/>
+                </>
+            }
             {displayMap &&
                 <>
                     <div className="map-container">
