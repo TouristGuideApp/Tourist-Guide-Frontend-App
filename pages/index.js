@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 export default function Home() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
+    const [mapInfo,setMapInfo] = useState([])
 
     const [displayLoading, setDisplayLoading] = useState(false)
     const [displayImages, setDisplayImages] = useState(false)
@@ -24,6 +25,8 @@ export default function Home() {
             const data = response.data
             setMaxPage(data['totalPages']-1)
             setCityData(data["content"])
+            setCityData(data)
+            setMapInfo(data)
             setDisplayLoading(false)
             setDisplayImages(true)
             setDisplayMap(true)
@@ -85,7 +88,7 @@ export default function Home() {
             {displayImages &&
                 <>
                     <div className="city-container">
-                        <CityInfoHeader cityProp={cityProp} cityData={cityData} maxPage={maxPage} currentPage={currentPage} changeCurrentPage={handlePageChange}/>
+                        <CityInfoHeader cityProp={cityProp} mapInfo={mapInfo} maxPage={maxPage} currentPage={currentPage} changeCurrentPage={handlePageChange}/>
                     </div>
                 </>
             }
