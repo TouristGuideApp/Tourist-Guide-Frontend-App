@@ -29,24 +29,27 @@ export default function Home() {
         let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
         axios.get(APICallString)
             .then(function (response) {
-                if (response.data.length !== 0) {
-                    const data = response.data
-                    setMaxPage(data['totalPages'] - 1)
-                    setCityData(data["content"])
-                    setMapInfo(data)
+                const responseData = response.data
+                if (response.status === 204){
+                    setEmptyCityAPICall(true)
+                    return;
+                }
+                if (responseData.content.length !== 0){
+                    setMaxPage(responseData['totalPages'] - 1)
+                    setCityData(responseData["content"])
+                    setMapInfo(responseData)
                     setDisplayLoading(false)
                     setDisplayImages(true)
                     setDisplayMap(true)
-                    setBadAPICall(false)
-                    setEmptyCityAPICall(false)
-                } else if (response.data.length === 0) {
+                    return;
+                }
+                if (responseData.content.length === 0){
                     setEmptyCityAPICall(true)
                     setDisplayMap(false)
                     setDisplayLoading(false)
                     setDisplayImages(false)
                 }
             }).catch(function (error) {
-            console.log(error)
             setBadAPICall(true)
             setDisplayLoading(false)
         })
@@ -54,6 +57,10 @@ export default function Home() {
 
     function submitForm(word) {
         setDisplayLoading(true)
+        setDisplayMap(false)
+        setDisplayImages(false)
+        setBadAPICall(false)
+        setEmptyCityAPICall(false)
         setCityProp(word)
         getAllImages(word, 1, 8)
     }
@@ -69,6 +76,8 @@ export default function Home() {
         setDisplayMap(false)
         setDisplayImages(false)
         setDisplayLoading(true)
+        setBadAPICall(false)
+        setEmptyCityAPICall(false)
         getAllImages(cityProp, newPage, 8)
     }
 
@@ -81,6 +90,8 @@ export default function Home() {
                     setDisplayLoading(true)
                     setDisplayImages(false)
                     setDisplayMap(false)
+                    setBadAPICall(false)
+                    setEmptyCityAPICall(false)
                     getAllImages(q)
                     setFirstLoad(false)
                 }
