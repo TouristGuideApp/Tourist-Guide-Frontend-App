@@ -32,6 +32,7 @@ export default function Home() {
                 const responseData = response.data
                 if (response.status === 204){
                     setEmptyCityAPICall(true)
+                    setDisplayLoading(false)
                     return;
                 }
                 if (responseData.content.length !== 0){
