@@ -30,18 +30,15 @@ export default function Home() {
         axios.get(APICallString)
             .then(function (response) {
                 if (response.data.length !== 0) {
-                    console.log(response.status)
                     const data = response.data
                     setMaxPage(data['totalPages'] - 1)
                     setCityData(data["content"])
-                    setCityData(data)
                     setMapInfo(data)
                     setDisplayLoading(false)
                     setDisplayImages(true)
                     setDisplayMap(true)
                     setBadAPICall(false)
                     setEmptyCityAPICall(false)
-                    console.log(data)
                 } else if (response.data.length === 0) {
                     setEmptyCityAPICall(true)
                     setDisplayMap(false)

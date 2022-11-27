@@ -29,7 +29,7 @@ function CityInfoHeader({mapInfo, cityProp, maxPage, currentPage, changeCurrentP
             <ImageList sx={{width: "100%", height: "100%"}}>
                 <ImageListItem key="Subheader" cols={4}>
                 </ImageListItem>
-                {mapInfo.map((cityObj) => {
+                {mapInfo.content.map((cityObj) => {
                     return (
                         <>
                             <ImageListItem key={cityObj.img}>
