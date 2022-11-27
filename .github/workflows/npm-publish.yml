@@ -1,0 +1,29 @@
+name: Deploy React Application
+
+on:
+  push:
+    tags:
+      - "v*"
+      
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v2
+
+      - name: Install
+        run: |
+          npm config set legacy-peer-deps true
+          npm i i18next i18next-http-backend i18next-browser-languagedetector react-i18next --save 
+          npm install --force
+          npm ci --ignore-scripts
+          npm run build 
+          
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .next
+          branch: gh-pages
