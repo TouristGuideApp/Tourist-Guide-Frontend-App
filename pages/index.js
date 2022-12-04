@@ -7,6 +7,9 @@ import {CircularProgress} from "@mui/material";
 import {useRouter} from "next/router";
 import EmptyCityAPICall from "../components/emptyCityAPICall";
 import BadAPICallError from "../components/badAPICallError";
+import InfoIcon from "@mui/icons-material/Info";
+import Link from "next/link";
+import * as React from "react";
 
 
 export default function Home() {
