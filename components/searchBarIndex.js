@@ -6,16 +6,12 @@ import {Autocomplete} from "@mui/material";
 import Button from '@mui/material/Button';
 
 const cities = [
-    "Paris",
-    "London",
-    "New York",
-    "Tokyo",
-    "Berlin",
-    "Buenos Aires",
-    "Cairo",
-    "Canberra",
-    "Rio de Janeiro",
-    "Dublin"
+    "Athens",
+    "Auschwitz",
+    "Jakarta",
+    "Russia",
+    "Thessaloniki",
+    "Seoul"
 ];
 
 const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
