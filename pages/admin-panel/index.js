@@ -6,7 +6,7 @@ import {CircularProgress} from "@mui/material";
 import FlickrPhotosListResult from "../../components/flickrPhotos/flickrPhotos-list-result"
 import * as React from "react";
 
-export default function AdminPanelPage(){
+export default function AdminPanelPage() {
     const [cityProp, setCityProp] = useState("")  //City Name From Search Bar
     const [cityData, setCityData] = useState([])
     const [firstLoad, setFirstLoad] = useState(true)
@@ -20,9 +20,9 @@ export default function AdminPanelPage(){
         axios.get(APICallString)
             .then(function (response) {
                 const responseData = response.data
-                    setCityData(responseData)
-                    setDisplayLoading(false)
-                    setDisplayImagesList(true)
+                setCityData(responseData)
+                setDisplayLoading(false)
+                setDisplayImagesList(true)
             })
     }
 
@@ -30,7 +30,7 @@ export default function AdminPanelPage(){
         setDisplayLoading(true)
         setDisplayImagesList(false)
         setCityProp(word)
-       getFlickrImages(word)
+        getFlickrImages(word)
     }
 
 
