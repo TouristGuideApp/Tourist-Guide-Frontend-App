@@ -12,8 +12,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import {useState} from "react";
-import LoginComponent from "/components/loginComponent";
-import SignUpComponent from "/components/signupComponent"
+import LoginComponent from "./loginComponent";
+import SignUpComponent from "./signupComponent"
 import { useEffect } from "react";
 
 function NavigationBar() {

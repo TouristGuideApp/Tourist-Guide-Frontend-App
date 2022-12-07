@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -16,6 +17,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.95",
     "@mui/material": "^5.10.1",
+    "@testing-library/user-event": "^14.4.3",
     "animate.css": "^4.1.1",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",
@@ -52,5 +54,11 @@
     "fs": false,
     "path": false,
     "os": false
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.2",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1"
   }
 }
