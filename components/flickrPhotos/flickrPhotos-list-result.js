@@ -1,25 +1,36 @@
 import * as React from "react";
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
+import PendingIcon from '@mui/icons-material/Pending';
 import {useState} from "react";
+import {callApiToAddImage} from "./apiCommands";
 
 const maxRowHeight = "175px";
 
-function AddButton({flickr_id}) {
+function AddButton({cityProp, imgObj}) {
     const [isDisabled, setDisabled] = useState(false);
-    const [text, setText] = useState("Add");
+    const [icon, setIcon] = useState(<AddIcon/>);
+    const [text, setText] = useState("Add to "+cityProp);
 
     const handleButtonPress = (event) => {
         const target = event.target;
-        setText("Adding " + flickr_id);
-        target.style.backgroundColor = "red";
+
         setDisabled(true);
+        setIcon(<PendingIcon/>);
+        setText("Adding " + imgObj.id);
+
+        callApiToAddImage(imgObj);
+
+        target.style.backgroundColor = "green";
+        setIcon(<DoneIcon/>);
+        setText("Added");
     }
 
     return (
         <div>
-            <Button variant="contained" disabled={isDisabled} value={flickr_id} onClick={handleButtonPress}>
-                <AddIcon/> {text} </Button>
+            <Button variant="contained" disabled={isDisabled} onClick={handleButtonPress}>
+                {icon} {text} </Button>
         </div>
     )
 }
@@ -49,8 +60,7 @@ function FlickrPhotosListResult({cityProp, cityData}) {
                                     <>
                                         <TableRow>
                                             <TableCell>
-                                                <AddButton flickr_id={imgObj.id}/>
-                                                <p> {imgObj.id} </p>
+                                                <AddButton cityProp={cityProp} imgObj={imgObj}/>
                                             </TableCell>
                                             <TableCell>
                                                 <img style={{maxWidth: "20vw", maxHeight: maxRowHeight}}
