@@ -1,70 +1,103 @@
 import * as React from "react";
-import {Table, TableCell, TableHead, TableRow} from "@mui/material";
+import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import {useState} from "react";
 
-const maxRowHeight = "100px"
+const maxRowHeight = "175px";
+
+function AddButton({flickr_id}) {
+    const [isDisabled, setDisabled] = useState(false);
+    const [text, setText] = useState("Add");
+
+    const handleButtonPress = (event) => {
+        const target = event.target;
+        setText("Adding " + flickr_id);
+        target.style.backgroundColor = "red";
+        setDisabled(true);
+    }
+
+    return (
+        <div>
+            <Button variant="contained" disabled={isDisabled} value={flickr_id} onClick={handleButtonPress}>
+                <AddIcon/> {text} </Button>
+        </div>
+    )
+}
 
 function FlickrPhotosListResult({cityProp, cityData}) {
     return (
         <>
             <div className="city-name">
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell> Flickr id </TableCell>
-                            <TableCell> Image </TableCell>
-                            <TableCell> Title </TableCell>
-                            <TableCell> Description </TableCell>
-                            <TableCell> Date taken </TableCell>
-                            <TableCell> Owner </TableCell>
-                            <TableCell> Latitude </TableCell>
-                            <TableCell> Longitude </TableCell>
-                            <TableCell> Views </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    {cityData.map((imgObj) => {
-                        return (
-                            <>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell> Image </TableCell>
+                                <TableCell> Title </TableCell>
+                                <TableCell> Description </TableCell>
+                                <TableCell> Date taken </TableCell>
+                                <TableCell> Owner </TableCell>
+                                <TableCell> Latitude </TableCell>
+                                <TableCell> Longitude </TableCell>
+                                <TableCell> Views </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {cityData.map((imgObj) => {
+                                return (
+                                    <>
+                                        <TableRow>
+                                            <TableCell>
+                                                <AddButton flickr_id={imgObj.id}/>
+                                                <p> {imgObj.id} </p>
+                                            </TableCell>
+                                            <TableCell>
+                                                <img style={{maxWidth: "20vw", maxHeight: maxRowHeight}}
+                                                     src={imgObj.thumbnail}
+                                                     loading={"lazy"}/>
+                                            </TableCell>
+                                            <TableCell>
+                                                <p style={{
+                                                    maxHeight: maxRowHeight,
+                                                    maxWidth: "10vw",
+                                                    overflowWrap: "break-word",
+                                                    overflowY: "scroll"
+                                                }}>{imgObj.title} </p>
+                                            </TableCell>
+                                            <TableCell>
+                                                <p style={{
+                                                    maxHeight: maxRowHeight,
+                                                    maxWidth: "15vw",
+                                                    overflowY: "scroll"
+                                                }}> {imgObj.description} </p>
+                                            </TableCell>
+                                            <TableCell>
+                                                {imgObj.dateTaken}
+                                            </TableCell>
+                                            <TableCell>
+                                                {imgObj.ownerName}
+                                            </TableCell>
+                                            <TableCell>
+                                                {imgObj.latitude}
+                                            </TableCell>
+                                            <TableCell>
+                                                {imgObj.longitude}
+                                            </TableCell>
+                                            <TableCell>
+                                                {imgObj.views}
+                                            </TableCell>
+                                            <TableCell>
 
-                                <TableRow>
-                                    <TableCell>
-                                        {imgObj.id}
-                                    </TableCell>
-                                    <TableCell>
-                                        <img style={{maxWidth: "200px", maxHeight: {maxRowHeight}}}
-                                             src={imgObj.thumbnail}
-                                             alt="Image Could Not be Load"
-                                             loading={"lazy"}/>
-                                    </TableCell>
-                                    <TableCell>
-                                        <p style={{maxHeight: {maxRowHeight}, overflow: "scroll"}}>{imgObj.title} </p>
-                                    </TableCell>
-                                    <TableCell>
-                                        <p style={{
-                                            maxHeight: {maxRowHeight},
-                                            overflow: "scroll"
-                                        }}> {imgObj.description} </p>
-                                    </TableCell>
-                                    <TableCell>
-                                        {imgObj.dateTaken}
-                                    </TableCell>
-                                    <TableCell>
-                                        {imgObj.ownerName}
-                                    </TableCell>
-                                    <TableCell>
-                                        {imgObj.latitude}
-                                    </TableCell>
-                                    <TableCell>
-                                        {imgObj.longitude}
-                                    </TableCell>
-                                    <TableCell>
-                                        {imgObj.views}
-                                    </TableCell>
-                                </TableRow>
+                                            </TableCell>
+                                        </TableRow>
 
-                            </>
-                        )
-                    })}
-                </Table>
+                                    </>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         </>
     )
