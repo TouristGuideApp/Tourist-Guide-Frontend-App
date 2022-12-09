@@ -6,12 +6,10 @@ import PendingIcon from '@mui/icons-material/Pending';
 import {useState} from "react";
 import {callApiToAddImage} from "./apiCommands";
 
-const maxRowHeight = "175px";
-
 function AddButton({cityProp, imgObj}) {
     const [isDisabled, setDisabled] = useState(false);
     const [icon, setIcon] = useState(<AddIcon/>);
-    const [text, setText] = useState("Add to "+cityProp);
+    const [text, setText] = useState("Add");
 
     const handleButtonPress = (event) => {
         const target = event.target;
@@ -36,6 +34,8 @@ function AddButton({cityProp, imgObj}) {
 }
 
 function FlickrPhotosListResult({cityProp, cityData}) {
+    const maxRowHeight = "175px";
+
     return (
         <>
             <div className="city-name">
