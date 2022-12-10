@@ -2,6 +2,7 @@ import * as React from "react";
 import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
+import ErrorIcon from '@mui/icons-material/Error';
 import PendingIcon from '@mui/icons-material/Pending';
 import {useState} from "react";
 import {callApiToAddImage} from "./apiCommands";
@@ -16,13 +17,22 @@ function AddButton({cityProp, imgObj}) {
 
         setDisabled(true);
         setIcon(<PendingIcon/>);
-        setText("Adding " + imgObj.id);
+        setText(" Adding");
 
-        callApiToAddImage(imgObj);
+        callApiToAddImage(imgObj).then(successResult => {
+            target.style.backgroundColor = "green";
+            setIcon(<DoneIcon/>);
+            setText(" Added");
+            console.log(successResult);
+        }).catch(error=> {
+            target.style.backgroundColor = "orange";
+            setIcon(<ErrorIcon/>);
+            setText(" Failed");
+            setDisabled(false);
+            console.log(error.message);
+        })
 
-        target.style.backgroundColor = "green";
-        setIcon(<DoneIcon/>);
-        setText("Added");
+
     }
 
     return (
