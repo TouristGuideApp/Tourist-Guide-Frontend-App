@@ -76,7 +76,7 @@ export default function SearchBarIndexComp(props) {
                 >
                     <SearchBar searchQuery={searchQuery} setSearchQuery={handleChangeWord}
                                onFormSubmit={handleSubmitForm} onKeyDown={handleKeyDownSearchBar}/>
-                    <Button type="submit" variant="contained" onClick={handleSubmitForm}
+                    <Button data-testid="search-button" type="submit" variant="contained" onClick={handleSubmitForm}
                             style={{
                                 borderRadius: "8px",
                                 height: "49px",
