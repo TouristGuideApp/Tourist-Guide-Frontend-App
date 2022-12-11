@@ -34,7 +34,7 @@ function CityInfoHeader({ mapInfo, cityProp, maxPage, currentPage, changeCurrent
                             <ImageListItem key={cityObj.img}>
                                 <img
                                     style={{ width: "100%", height: "350px" }}
-                                    src={cityObj.fileName}
+                                    src={cityObj.thumbnail}
                                     alt="Image Could Not be Load"
                                     loading={"lazy"}
                                 />

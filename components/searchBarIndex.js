@@ -6,16 +6,12 @@ import {Autocomplete} from "@mui/material";
 import Button from '@mui/material/Button';
 
 const cities = [
-    "Paris",
-    "London",
-    "New York",
-    "Tokyo",
-    "Berlin",
-    "Buenos Aires",
-    "Cairo",
-    "Canberra",
-    "Rio de Janeiro",
-    "Dublin"
+    "Athens",
+    "Auschwitz",
+    "Jakarta",
+    "Russia",
+    "Thessaloniki",
+    "Seoul"
 ];
 
 const SearchBar = ({searchQuery, setSearchQuery, onFormSubmit, onKeyDown}) => (
@@ -80,7 +76,7 @@ export default function SearchBarIndexComp(props) {
                 >
                     <SearchBar searchQuery={searchQuery} setSearchQuery={handleChangeWord}
                                onFormSubmit={handleSubmitForm} onKeyDown={handleKeyDownSearchBar}/>
-                    <Button type="submit" variant="contained" onClick={handleSubmitForm}
+                    <Button data-testid="search-button" type="submit" variant="contained" onClick={handleSubmitForm}
                             style={{
                                 borderRadius: "8px",
                                 height: "49px",
