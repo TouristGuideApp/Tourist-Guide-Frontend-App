@@ -17,7 +17,6 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.95",
     "@mui/material": "^5.10.1",
-    "@testing-library/user-event": "^14.4.3",
     "animate.css": "^4.1.1",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",
@@ -58,6 +57,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^14.4.3",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1"
   }
