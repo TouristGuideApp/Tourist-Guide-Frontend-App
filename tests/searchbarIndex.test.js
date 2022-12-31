@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, queryByTestId, render, screen } from "@testing-library/react";
 import SearchBarIndexComp from "../components/searchBarIndex";
 import user from "@testing-library/user-event";
 
@@ -34,7 +34,7 @@ describe("Search Bar And Search Button", () => {
         render(<SearchBarIndexComp />);
 
         const searchInputElement = screen.getByPlaceholderText("Search...");
-        
+
         expect(searchInputElement.value).toBe("");
     });
     test("Search Field Input works correctly", () => {

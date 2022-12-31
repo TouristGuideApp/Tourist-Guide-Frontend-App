@@ -35,7 +35,7 @@ const SearchBar = ({ searchQuery, setSearchQuery, onFormSubmit, onKeyDown }) => 
 
 export default function SearchBarIndexComp(props) {
     const [searchQuery, setSearchQuery] = useState("");
-    const ALPHA_NUMERIC_DASH_REGEX = /^([^0-9!@#$%^&*()~`?><":{}|[]*)$/;
+    const CharacterBlocker = /^([^0-9!@#$%^&*()~`?><":{}|[]*)$/;
 
     const handleChangeWord = (e) => {
         setSearchQuery(e.target.value);
@@ -48,7 +48,7 @@ export default function SearchBarIndexComp(props) {
     };
 
     const handleKeyDownSearchBar = (e) => {
-        if(!ALPHA_NUMERIC_DASH_REGEX.test(e.key)){
+        if(!CharacterBlocker.test(e.key)){
             e.preventDefault();
         }
         if (e.keyCode === 31) {

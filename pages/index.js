@@ -131,7 +131,7 @@ export default function Home() {
             {displayMap && (
                 <>
                     <div className="map-container">
-                        <AllImagesMap mapInfo={cityData} />
+                        <AllImagesMap mapInfo={cityData} data-testid="mapcomp"/>
                     </div>
                 </>
             )}
