@@ -48,7 +48,7 @@ export default function SearchBarIndexComp(props) {
     };
 
     const handleKeyDownSearchBar = (e) => {
-        if(!CharacterBlocker.test(e.key)){
+        if(!CharacterBlocker.test(e.key) || (e.keyCode === 32)){
             e.preventDefault();
         }
         if (e.keyCode === 31) {
