@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import EmptyCityAPICall from "../components/error-components/emptyCityAPICall";
 import BadAPICallError from "../components/error-components/badAPICallError";
 import EmptyTextfield from "../components/error-components/emptyTextfield";
+import SearchInputBig from "../components/error-components/searchInputBig";
 
 export default function Home() {
     const [cityProp, setCityProp] = useState(""); //City Name From Search Bar
@@ -17,6 +18,7 @@ export default function Home() {
     const [emptyTextfield, setEmptyTextfield] = useState(false);
     const [emptyCityAPICall, setEmptyCityAPICall] = useState(false);
     const [badAPICall, setBadAPICall] = useState(false);
+    const [wordTooLongError, setWordTooLongError] = useState(false);
     const [displayLoading, setDisplayLoading] = useState(false);
     const [displayImages, setDisplayImages] = useState(false);
     const [displayMap, setDisplayMap] = useState(false);
@@ -26,6 +28,13 @@ export default function Home() {
     const router = useRouter();
 
     function getAllImages(titleToSearch, page, limit) {
+        if(titleToSearch.length > 100){
+            setDisplayLoading(false);
+            setEmptyTextfield(false)
+            setEmptyCityAPICall(false)
+            setWordTooLongError(true)
+            return;
+        }
         let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
         axios
             .get(APICallString)
@@ -35,10 +44,12 @@ export default function Home() {
                     setEmptyTextfield(false);
                     setEmptyCityAPICall(true);
                     setDisplayLoading(false);
+                    setWordTooLongError(false)
                     return;
                 }
                 if (responseData.content.length !== 0) {
                     setEmptyTextfield(false);
+                    setWordTooLongError(false)
                     setMaxPage(responseData["totalPages"] - 1);
                     setCityData(responseData["content"]);
                     setMapInfo(responseData);
@@ -53,14 +64,18 @@ export default function Home() {
                     setDisplayMap(false);
                     setDisplayLoading(false);
                     setDisplayImages(false);
+                    setWordTooLongError(false)
                 }
             })
             .catch(function (error) {
                 if (titleToSearch === "") {
                     setEmptyTextfield(true);
                     setDisplayLoading(false);
+                    setWordTooLongError(false)
+
                 } else {
                     setEmptyTextfield(false);
+                    setWordTooLongError(false)
                     setBadAPICall(true);
                     setDisplayLoading(false);
                 }
@@ -126,6 +141,11 @@ export default function Home() {
             {badAPICall && (
                 <>
                     <BadAPICallError />
+                </>
+            )}
+            {wordTooLongError && (
+                <>
+                    <SearchInputBig/>
                 </>
             )}
             {displayMap && (
