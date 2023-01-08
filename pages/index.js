@@ -10,6 +10,7 @@ import BadAPICallError from "../components/error-components/badAPICallError";
 import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import * as React from "react";
+import Head from 'next/head';
 
 
 export default function Home() {
@@ -106,6 +107,11 @@ export default function Home() {
 
     return (
         <>
+            <Head>
+                <title>
+                    Home | Tourist Guide
+                </title>
+            </Head>
             <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
             {emptyCityAPICall &&
                 <>
