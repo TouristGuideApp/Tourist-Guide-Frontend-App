@@ -20,7 +20,7 @@ jobs:
           npm i i18next i18next-http-backend i18next-browser-languagedetector react-i18next --save 
           npm install --force
           npm ci --ignore-scripts
-          npm run dev 
+          npm run build 
           
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
