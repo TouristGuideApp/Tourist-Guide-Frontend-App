@@ -5,12 +5,11 @@ import dynamic from "next/dynamic";
 import CityInfoHeader from "../components/cityInfoHeader";
 import {CircularProgress} from "@mui/material";
 import {useRouter} from "next/router";
-import EmptyCityAPICall from "../components/emptyCityAPICall";
-import BadAPICallError from "../components/badAPICallError";
+import EmptyCityAPICall from "../components/error-components/emptyCityAPICall";
+import BadAPICallError from "../components/error-components/badAPICallError";
 import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import * as React from "react";
-import Head from "next/head";
 
 
 export default function Home() {
@@ -107,11 +106,6 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>
-                    Tourist Guide
-                </title>
-            </Head>
             <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
             {emptyCityAPICall &&
                 <>
