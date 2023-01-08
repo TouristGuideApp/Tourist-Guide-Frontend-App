@@ -15,8 +15,10 @@ import {useState} from "react";
 import LoginComponent from "./loginComponent";
 import SignUpComponent from "./signupComponent"
 import { useEffect } from "react";
+import {useRouter} from "next/router";
 
 function NavigationBar() {
+    const router = useRouter()
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -141,14 +143,22 @@ function NavigationBar() {
                         }
                         {userLoggedIn &&
                             <>
-                            <MenuItem
-                                key={0}
-                                onClick={handleLogout}
-                            >
-                                <Typography textAlign="center">
-                                    {"Log Out"}
-                                </Typography>
-                            </MenuItem>
+                                <MenuItem
+                                    key={0}
+                                    onClick={() => router.push("/collections").then()}
+                                >
+                                    <Typography textAlign="center">
+                                        {"Collections"}
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem
+                                    key={2}
+                                    onClick={handleLogout}
+                                >
+                                    <Typography textAlign="center">
+                                        {"Log Out"}
+                                    </Typography>
+                                </MenuItem>
                             </>
                         }
                         </Menu>
