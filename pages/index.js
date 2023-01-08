@@ -121,9 +121,6 @@ export default function Home() {
                 </title>
             </Head>
             <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
-            {emptyCityAPICall &&
-                <SearchBarIndexComp changeWord={(word) => setCityProp(word)} submitForm={submitForm} />
-            }
             {emptyCityTextfield && (
                 <>
                     <EmptyTextfield/>
