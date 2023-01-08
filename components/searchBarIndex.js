@@ -36,6 +36,7 @@ const SearchBar = ({ searchQuery, setSearchQuery, onFormSubmit, onKeyDown }) => 
 export default function SearchBarIndexComp(props) {
     const [searchQuery, setSearchQuery] = useState("");
     const CharacterBlocker = /^([^0-9!@#$%^&*()~`?><":{}|[]*)$/;
+    const greekCharacterBlocker = /^[\sΑ-Ω0-9α-ω!$@#*+=._%,-/]*$/;
 
     const handleChangeWord = (e) => {
         setSearchQuery(e.target.value);
@@ -48,7 +49,7 @@ export default function SearchBarIndexComp(props) {
     };
 
     const handleKeyDownSearchBar = (e) => {
-        if(!CharacterBlocker.test(e.key) || (e.keyCode === 32)){
+        if (!CharacterBlocker.test(e.key) || greekCharacterBlocker.test(e.key) || e.keyCode === 32) {
             e.preventDefault();
         }
         if (e.keyCode === 31) {
