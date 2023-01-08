@@ -10,7 +10,7 @@ import BadAPICallError from "../components/error-components/badAPICallError";
 import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import * as React from "react";
-import Head from 'next/head';
+import Head from "next/head";
 
 import EmptyTextfield from "../components/error-components/emptyTextfield";
 
@@ -34,46 +34,51 @@ export default function Home() {
     function getAllImages(titleToSearch, page, limit) {
         const onlyLetterTitleToSearch = titleToSearch.replace(/[^a-z]/gi, "");
         console.log(onlyLetterTitleToSearch);
-        let APICallString =
-            "http://localhost:8080/api/v1/images/getByTitle/" + onlyLetterTitleToSearch + "?page=" + page + "&size=" + limit;
-        axios
-            .get(APICallString)
-            .then(function (response) {
-                const responseData = response.data;
-                if (response.status === 204) {
-                    setEmptyCityTextfield(false);
-                    setEmptyCityAPICall(true);
-                    setDisplayLoading(false);
-                    return;
-                }
-                if (responseData.content.length !== 0) {
-                    setEmptyCityTextfield(false);
-                    setMaxPage(responseData["totalPages"] - 1);
-                    setCityData(responseData["content"]);
-                    setMapInfo(responseData);
-                    setDisplayLoading(false);
-                    setDisplayImages(true);
-                    setDisplayMap(true);
-                    return;
-                }
-                if (responseData.content.length === 0) {
-                    setEmptyCityTextfield(false);
-                    setEmptyCityAPICall(true);
-                    setDisplayMap(false);
-                    setDisplayLoading(false);
-                    setDisplayImages(false);
-                }
-            })
-            .catch(function (error) {
-                if (titleToSearch === "") {
-                    setEmptyCityTextfield(true);
-                    setDisplayLoading(false);
-                } else {
-                    setEmptyCityTextfield(false);
-                    setBadAPICall(true);
-                    setDisplayLoading(false);
-                }
-            });
+        if (onlyLetterTitleToSearch !== "") {
+            let APICallString =
+                "http://localhost:8080/api/v1/images/getByTitle/" + onlyLetterTitleToSearch + "?page=" + page + "&size=" + limit;
+            axios
+                .get(APICallString)
+                .then(function (response) {
+                    const responseData = response.data;
+                    if (response.status === 204) {
+                        setEmptyCityTextfield(false);
+                        setEmptyCityAPICall(true);
+                        setDisplayLoading(false);
+                        return;
+                    }
+                    if (responseData.content.length !== 0) {
+                        setEmptyCityTextfield(false);
+                        setMaxPage(responseData["totalPages"] - 1);
+                        setCityData(responseData["content"]);
+                        setMapInfo(responseData);
+                        setDisplayLoading(false);
+                        setDisplayImages(true);
+                        setDisplayMap(true);
+                        return;
+                    }
+                    if (responseData.content.length === 0) {
+                        setEmptyCityTextfield(false);
+                        setEmptyCityAPICall(true);
+                        setDisplayMap(false);
+                        setDisplayLoading(false);
+                        setDisplayImages(false);
+                    }
+                })
+                .catch(function (error) {
+                    if (titleToSearch === "" || titleToSearch === null) {
+                        setEmptyCityTextfield(true);
+                        setDisplayLoading(false);
+                    } else {
+                        setEmptyCityTextfield(false);
+                        setBadAPICall(true);
+                        setDisplayLoading(false);
+                    }
+                });
+        } else {
+            setEmptyCityTextfield(true);
+            setDisplayLoading(false);
+        }
     }
 
     function submitForm(word) {
@@ -122,11 +127,9 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>
-                    Home | Tourist Guide
-                </title>
+                <title>Home | Tourist Guide</title>
             </Head>
-            <SearchBarIndexComp changeWord={word => setCityProp(word)} submitForm={submitForm}/>
+            <SearchBarIndexComp changeWord={(word) => setCityProp(word)} submitForm={submitForm} />
             {emptyCityTextfield && (
                 <>
                     <EmptyTextfield />
