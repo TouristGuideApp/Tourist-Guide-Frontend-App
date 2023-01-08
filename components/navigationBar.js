@@ -16,6 +16,7 @@ import LoginComponent from "./loginComponent";
 import SignUpComponent from "./signupComponent"
 import { useEffect } from "react";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 function NavigationBar() {
     const router = useRouter()
@@ -68,24 +69,26 @@ function NavigationBar() {
                         sx={{display: {xs: "none", md: "flex"}, mr: 1, color: "white", zIndex: 2}}
                     />
 
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: {xs: "none", md: "flex"},
-                            fontWeight: 700,
-                            letterSpacing: ".1rem",
-                            fontFamily: "Ubuntu",
-                            textDecoration: "none",
-                            color: "white",
-                            zIndex: 2
-                        }}
-                    >
-                        TourGuide
-                    </Typography>
+                    <Link href={"/"}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            sx={{
+                                mr: 2,
+                                display: {xs: "none", md: "flex"},
+                                fontWeight: 700,
+                                letterSpacing: ".1rem",
+                                fontFamily: "Ubuntu",
+                                textDecoration: "none",
+                                color: "white",
+                                zIndex: 2,
+                                cursor: "pointer"
+                            }}
+                        >
+                            TourGuide
+                        </Typography>
+                    </Link>
                     <Box
                         sx={{
                             flexGrow: 1,
