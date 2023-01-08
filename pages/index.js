@@ -9,6 +9,9 @@ import EmptyCityAPICall from "../components/error-components/emptyCityAPICall";
 import BadAPICallError from "../components/error-components/badAPICallError";
 import EmptyTextfield from "../components/error-components/emptyTextfield";
 import SearchInputBig from "../components/error-components/searchInputBig";
+import InfoIcon from "@mui/icons-material/Info";
+import Link from "next/link";
+import * as React from "react";
 
 export default function Home() {
     const [cityProp, setCityProp] = useState(""); //City Name From Search Bar
