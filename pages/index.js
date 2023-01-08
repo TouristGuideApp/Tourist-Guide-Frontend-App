@@ -30,17 +30,22 @@ export default function Home() {
     const router = useRouter();
 
     function getAllImages(titleToSearch, page, limit) {
-        let APICallString = "http://localhost:8080/api/v1/images/getByTitle/" + titleToSearch + "?page=" + page + "&size=" + limit;
+        const onlyLetterTitleToSearch = titleToSearch.replace(/[^a-z]/gi, "");
+        console.log(onlyLetterTitleToSearch);
+        let APICallString =
+            "http://localhost:8080/api/v1/images/getByTitle/" + onlyLetterTitleToSearch + "?page=" + page + "&size=" + limit;
         axios
             .get(APICallString)
             .then(function (response) {
                 const responseData = response.data;
                 if (response.status === 204) {
+                    setEmptyCityTextfield(false);
                     setEmptyCityAPICall(true);
                     setDisplayLoading(false);
                     return;
                 }
                 if (responseData.content.length !== 0) {
+                    setEmptyCityTextfield(false);
                     setMaxPage(responseData["totalPages"] - 1);
                     setCityData(responseData["content"]);
                     setMapInfo(responseData);
@@ -50,6 +55,7 @@ export default function Home() {
                     return;
                 }
                 if (responseData.content.length === 0) {
+                    setEmptyCityTextfield(false);
                     setEmptyCityAPICall(true);
                     setDisplayMap(false);
                     setDisplayLoading(false);
@@ -60,10 +66,10 @@ export default function Home() {
                 if (titleToSearch === "") {
                     setEmptyCityTextfield(true);
                     setDisplayLoading(false);
-                }
-                else{
-                setBadAPICall(true);
-                setDisplayLoading(false);
+                } else {
+                    setEmptyCityTextfield(false);
+                    setBadAPICall(true);
+                    setDisplayLoading(false);
                 }
             });
     }
@@ -116,7 +122,7 @@ export default function Home() {
             <SearchBarIndexComp changeWord={(word) => setCityProp(word)} submitForm={submitForm} />
             {emptyCityTextfield && (
                 <>
-                    <EmptyTextfield/>
+                    <EmptyTextfield />
                 </>
             )}
             {emptyCityAPICall && (
