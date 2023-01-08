@@ -7,6 +7,7 @@ import { CircularProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import EmptyCityAPICall from "../components/error-components/emptyCityAPICall";
 import BadAPICallError from "../components/error-components/badAPICallError";
+import SearchInputBig from "../components/error-components/searchInputBig";
 import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import * as React from "react";
@@ -22,6 +23,7 @@ export default function Home() {
     const [emptyCityAPICall, setEmptyCityAPICall] = useState(false);
     const [badAPICall, setBadAPICall] = useState(false);
     const [emptyCityTextfield, setEmptyCityTextfield] = useState(false);
+    const [wordTooLongError, setWordTooLongError] = useState(false);
 
     const [displayLoading, setDisplayLoading] = useState(false);
     const [displayImages, setDisplayImages] = useState(false);
@@ -32,6 +34,13 @@ export default function Home() {
     const router = useRouter();
 
     function getAllImages(titleToSearch, page, limit) {
+        if (titleToSearch.length > 90) {
+            setDisplayLoading(false);
+            setEmptyCityTextfield(false);
+            setEmptyCityAPICall(false);
+            setWordTooLongError(true);
+            return;
+        }
         const onlyLetterTitleToSearch = titleToSearch.replace(/[^a-z]/gi, "");
         console.log(onlyLetterTitleToSearch);
         if (onlyLetterTitleToSearch !== "") {
@@ -45,6 +54,7 @@ export default function Home() {
                         setEmptyCityTextfield(false);
                         setEmptyCityAPICall(true);
                         setDisplayLoading(false);
+                        setWordTooLongError(false);
                         return;
                     }
                     if (responseData.content.length !== 0) {
@@ -55,6 +65,7 @@ export default function Home() {
                         setDisplayLoading(false);
                         setDisplayImages(true);
                         setDisplayMap(true);
+                        setWordTooLongError(false);
                         return;
                     }
                     if (responseData.content.length === 0) {
@@ -63,16 +74,19 @@ export default function Home() {
                         setDisplayMap(false);
                         setDisplayLoading(false);
                         setDisplayImages(false);
+                        setWordTooLongError(false);
                     }
                 })
                 .catch(function (error) {
                     if (titleToSearch === "" || titleToSearch === null) {
                         setEmptyCityTextfield(true);
                         setDisplayLoading(false);
+                        setWordTooLongError(false);
                     } else {
                         setEmptyCityTextfield(false);
                         setBadAPICall(true);
                         setDisplayLoading(false);
+                        setWordTooLongError(false);
                     }
                 });
         } else {
@@ -130,6 +144,11 @@ export default function Home() {
                 <title>Home | Tourist Guide</title>
             </Head>
             <SearchBarIndexComp changeWord={(word) => setCityProp(word)} submitForm={submitForm} />
+            {wordTooLongError && (
+                <>
+                    <SearchInputBig/>
+                </>
+            )}
             {emptyCityTextfield && (
                 <>
                     <EmptyTextfield />
