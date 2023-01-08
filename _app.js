@@ -110,7 +110,7 @@ function LoginComponent({ onClose , onLoginSuccess  }) {
         });
         var config = {
             method: "post",
-            url: "http://127.0.0.1:8080/api/v1/users/login/email",
+            url: "/api/v1/users/login/email",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -118,9 +118,12 @@ function LoginComponent({ onClose , onLoginSuccess  }) {
         };
         axios(config).then(function(response) {
             const data = response.data;
-            localStorage.setItem("userJWT", data.token);
-            localStorage.setItem("userLoggedIn", true);
-            onLoginSuccess.call(this);
+            if (data["status"] !== "error") {
+                localStorage.setItem("userJWT", data.token);
+                localStorage.setItem("userLoggedIn", true);
+                onLoginSuccess.call(this);
+                return;
+            }
         }).catch(function(error) {
             console.log(error);
         });
@@ -133,7 +136,7 @@ function LoginComponent({ onClose , onLoginSuccess  }) {
         });
         var config = {
             method: "post",
-            url: "http://127.0.0.1:8080/api/v1/users/login/username",
+            url: "/api/v1/users/login/username",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -141,9 +144,12 @@ function LoginComponent({ onClose , onLoginSuccess  }) {
         };
         axios(config).then(function(response) {
             const data = response.data;
-            localStorage.setItem("userJWT", data.token);
-            localStorage.setItem("userLoggedIn", true);
-            onLoginSuccess.call(this);
+            if (data["status"] !== "error") {
+                localStorage.setItem("userJWT", data.token);
+                localStorage.setItem("userLoggedIn", true);
+                onLoginSuccess.call(this);
+                return;
+            }
         }).catch(function(error) {
             console.log(error);
         });
